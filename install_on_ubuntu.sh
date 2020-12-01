@@ -35,7 +35,8 @@ _install_zsh() {
 
 _install_tmux() {
   sudo apt-get install tmux -y
-  cp ./.tmux.conf "${HOME_PATH}/"
+  ln -s -f ./.tmux/.tmux.conf "${HOME_PATH}/.tmux.conf"
+  cp ./.tmux/.tmux.conf.local "${HOME_PATH}/"
 }
 
 _install_ack() {
