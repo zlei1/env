@@ -163,6 +163,7 @@ xnoremap >  >gv
 
 " tagbar
 nnoremap <F9> :TagbarToggle<CR>
+nnoremap <Leader>tt :TagbarToggle<CR>
 " 设置tagbar在右边
 let g:tagbar_left = 0
 " 设置tagbar打开时是否自动获取焦点
@@ -172,11 +173,9 @@ let g:tagbar_left = 0
 
 " ==== 系统剪切板复制粘贴 ====
 " v 模式下复制内容到系统剪切板
-" xnoremap <Leader>c "+yy
+xnoremap ;y "+yy
 " n 模式下复制一行到系统剪切板
-" nnoremap <Leader>c "+yy
-xnoremap cc "+yy
-nnoremap cc "+yy
+nnoremap ;y "+yy
 
 " EasyAlign
 xnoremap ga <Plug>(EasyAlign)
