@@ -20,8 +20,6 @@ install_units() {
   _install_fzf
 
   _install_vim
-
-  _install_modern_tool
 }
 
 _install_zsh() {
@@ -56,16 +54,6 @@ _install_vim() {
   cp -rf ./.vim ~/
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim -c 'PluginInstall' -c 'qa!'
-}
-
-_install_modern_tool() {
-  sudo apt install snapd
-  sudo snap install procs
-  sudo apt-get install tldr -y
-  sudo apt-get install lsd -y
-  sudo apt-get install bat -y
-  sudo apt-get install du-dust -y
-  sudo apt-get install duf -y
 }
 
 main() {
