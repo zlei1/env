@@ -2,6 +2,8 @@
 set -e
 
 update_apt() {
+  echo "deb http://packages.azlux.fr/debian/ buster main" | sudo tee /etc/apt/sources.list.d/azlux.list
+  wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
   sudo apt-get update -y
 }
 
@@ -59,17 +61,14 @@ _install_vim() {
 }
 
 _install_modern_tool() {
-  sudo apt-get install lsd
-  sudo apt-get install tldr
-  sudo apt-get install bat
-  sudo apt-get install du-dust
-  sudo apt-get install duf
-
-  echo "deb http://packages.azlux.fr/debian/ buster main" | sudo tee /etc/apt/sources.list.d/azlux.list
-  wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
-  sudo apt-get update -y
-  sudo apt-get install gping
-
+  sudo apt install snapd
+  sudo snap install procs
+  sudo apt-get install tldr -y
+  sudo apt-get install lsd -y
+  sudo apt-get install bat -y
+  sudo apt-get install du-dust -y
+  sudo apt-get install duf -y
+  sudo apt-get install gping -y
 }
 
 main() {
