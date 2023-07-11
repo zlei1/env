@@ -13,4 +13,3 @@
 - [bat](https://github.com/sharkdp/bat)
 - [dust](https://github.com/bootandy/dust)
 - [duf](https://github.com/muesli/duf)
-- [gping](https://github.com/orf/gping)
