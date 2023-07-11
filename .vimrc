@@ -4,11 +4,17 @@ filetype on
 set encoding=utf-8
 
 syntax on
-set re=1
+set re=2
 set ttyfast
 set lazyredraw
 
 colorscheme molokai
+
+" backspace 的三种模式
+" 0 same as set backspace= (Vi compatible)
+" 1 same as set backspace=indent,eol
+" 2 same as set backspace=indent,eol,start
+set backspace=2
 
 " fzf
 nnoremap <C-p> :Files<CR>
@@ -54,7 +60,6 @@ set ignorecase
 " 在搜索时，输入的词句的逐字符高亮
 " set incsearch
 
-" 通过使用: commands命令，告诉我们文件的哪一行被改变过
 set report=0
 " 高亮显示匹配的括号([{和}])
 set showmatch
@@ -72,6 +77,7 @@ let g:indentLine_char = '¦'
 let g:indentLine_enabled = 1
 
 " syntastic
+set statusline+=%F
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -87,17 +93,9 @@ autocmd BufReadPost *
       \   exe "normal! g`\"" |
       \ endif
 
-" vim vue
-autocmd FileType vue syntax sync fromstart
-
 " buffers
 " 允许隐藏被修改过的 buffer
 " set hidden
-
-" 允许 airline 在顶部显示 Buffer 列表
-" let g:airline#extensions#tabline#enabled=1
-" 显示 buffer 编号，方便切换
-let g:airline#extensions#tabline#buffer_nr_show=1
 
 " n始终为向后搜索 N始终为向前搜索
 nnoremap <expr> n  'Nn'[v:searchforward]
@@ -120,7 +118,7 @@ else
   let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
 endif
 
-" ag search
+" Ack 使用 ag 命令搜索
 if executable('ag')
   let g:ackprg = 'ag --vimgrep'
 endif
@@ -147,6 +145,7 @@ let g:NERDTreeGitStatusIndicatorMapCustom = {
     \ 'Ignored'   : '☒',
     \ "Unknown"   : "?"
     \ }
+:let g:NERDTreeWinSize=40
 
 " 递归  非递归    模式
 " :map	:noremap	normal, visual, operator-pending
@@ -167,9 +166,9 @@ nnoremap <Leader>tt :TagbarToggle<CR>
 " 设置tagbar在右边
 let g:tagbar_left = 0
 " 设置tagbar打开时是否自动获取焦点
-" let g:tagbar_autofocus = 0
+let g:tagbar_autofocus = 0
 " 设置tagbar默认打开
-" autocmd VimEnter * nested TagbarOpen
+autocmd VimEnter * nested TagbarOpen
 
 " ==== 系统剪切板复制粘贴 ====
 " v 模式下复制内容到系统剪切板
@@ -198,13 +197,28 @@ nnoremap <Leader>m :marks<CR>
 
 inoremap jj <Esc>
 
-" 
 nnoremap <space> :
 xnoremap <space> :
 
 " MarkdownPreview
 cabbrev mdp MarkdownPreview
 cabbrev mdps MarkdownPreviewStop
+
+" Function
+function! RailsProjectTagsUpdate()
+  let curdir=getcwd()
+  while !filereadable("./tags")
+    cd ..
+    if getcwd() == "/"
+      break
+    endif
+  endwhile
+
+  if filewritable("./tags")
+    !ctags -R --languages=ruby --exclude=.git --exclude=log --exclude=tmp --exclude=node_modules . $(bundle list --paths)
+  endif
+  execute ":cd " . curdir
+endfunction
 
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -225,14 +239,11 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 " A Vim plugin which shows a git diff in the gutter (sign column) and stages/undoes (partial) hunks.
 Plugin 'airblade/vim-gitgutter'
 
+" fugitive.vim: A Git wrapper so awesome
+Plugin 'tpope/vim-fugitive'
+
 " Vim plugin for intensely orgasmic commenting
 Plugin 'scrooloose/nerdcommenter'
-
-" Lean & mean status/tabline for vim that's light as air.
-Plugin 'vim-airline/vim-airline'
-
-" A collection of themes for vim-airline
-Plugin 'vim-airline/vim-airline-themes'
 
 " A vim plugin to display the indention levels with thin vertical lines
 Plugin 'Yggdroot/indentLine'
@@ -240,35 +251,21 @@ Plugin 'Yggdroot/indentLine'
 " Vim plugin for the Perl module / CLI script 'ack'
 Plugin 'mileszs/ack.vim'
 
-" Go development plugin for Vim
-Plugin 'fatih/vim-go'
-
-" Vim/Ruby Configuration Files
-Plugin 'vim-ruby/vim-ruby'
-
-" rails.vim: Ruby on Rails power tools
-Plugin 'tpope/vim-rails'
-
-" Syntax Highlight for Vue.js components
-Plugin 'posva/vim-vue'
-
 " Syntax checking hacks for vim
 Plugin 'scrooloose/syntastic'
 
 " Vim plugin that displays tags in a window
 Plugin 'majutsushi/tagbar'
 
-" Rainbow brackets for Vim
-Plugin 'frazrepo/vim-rainbow'
-
-" This Vim plugin will search for terms using the excellent Dash.app , making API lookups simple
-Plugin 'rizzatti/dash.vim'
-
-" mathjax support for markdown-preview.vim plugin
-Plugin 'iamcco/mathjax-support-for-mkdp'
-Plugin 'iamcco/markdown-preview.vim'
+" Markdown Preview for (Neo)vim
+Plugin 'iamcco/markdown-preview.nvim'
 
 " Vim motions on speed! 
+" 跳转到当前光标前后的位置 <leader><leader>w
+" 搜索跳转 <leader><leader>s
+" 行级跳转 <leader><leader>j 和 <leader><leader>k
+" 行内跳转 <leader><leader>h 和 <leader><leader>l
+" 重复上一次动作 <Leader><leader>.
 Plugin 'easymotion/vim-easymotion'
 
 " A Vim alignment plugin
@@ -277,11 +274,8 @@ Plugin 'junegunn/vim-easy-align'
 " Plugin to toggle, display and navigate marks
 Plugin 'kshenoy/vim-signature'
 
-" Vim client for TabNine
-Plugin 'zxqfl/tabnine-vim'
-
-" fugitive.vim: A Git wrapper so awesome
-Plugin 'tpope/vim-fugitive'
+" Coc.nvim
+Plugin 'neoclide/coc.nvim'
 
 " fzf vim
 Plugin 'junegunn/fzf'
