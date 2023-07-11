@@ -8,6 +8,7 @@ update_apt() {
 install_units() {
   sudo apt-get install curl -y
   sudo apt-get install wget -y
+  sudo apt-get install exuberant-ctags -y
 
   _install_zsh
 
@@ -18,8 +19,9 @@ install_units() {
 
   _install_fzf
 
-  sudo apt-get install exuberant-ctags -y
   _install_vim
+
+  _install_modern_tool
 }
 
 _install_zsh() {
@@ -54,6 +56,20 @@ _install_vim() {
   cp -rf ./.vim ~/
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim -c 'PluginInstall' -c 'qa!'
+}
+
+_install_modern_tool() {
+  sudo apt-get install lsd
+  sudo apt-get install tldr
+  sudo apt-get install bat
+  sudo apt-get install du-dust
+  sudo apt-get install duf
+
+  echo "deb http://packages.azlux.fr/debian/ buster main" | sudo tee /etc/apt/sources.list.d/azlux.list
+  wget -qO - https://azlux.fr/repo.gpg.key | sudo apt-key add -
+  sudo apt-get update -y
+  sudo apt-get install gping
+
 }
 
 main() {
