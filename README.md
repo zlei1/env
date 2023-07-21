@@ -9,4 +9,4 @@
 - [fzf](https://github.com/junegunn/fzf)
 - [vim](https://github.com/vim/vim)
 
-## [Modern unix](https://github.com/ibraheemdev/modern-unix)
+## [modern-unix](https://github.com/ibraheemdev/modern-unix)
