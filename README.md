@@ -9,10 +9,4 @@
 - [fzf](https://github.com/junegunn/fzf)
 - [vim](https://github.com/vim/vim)
 
-## [Modern unix](https://github.com/ibraheemdev/modern-unix)
-- [procs](https://github.com/dalance/procs)
-- [tldr](https://github.com/tldr-pages/tldr)
-- [lsd](https://github.com/lsd-rs/lsd)
-- [bat](https://github.com/sharkdp/bat)
-- [dust](https://github.com/bootandy/dust)
-- [duf](https://github.com/muesli/duf)
+## [推荐安装](https://github.com/ibraheemdev/modern-unix)
