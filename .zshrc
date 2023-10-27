@@ -7,5 +7,3 @@ plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
 
 alias vi="vim"
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
