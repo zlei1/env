@@ -1,6 +1,4 @@
-## 服务器安装工具
-
-## 工具
+## Tools
 
 - [zsh](https://github.com/ohmyzsh/ohmyzsh)
 - [tmux](https://github.com/tmux/tmux)
@@ -8,5 +6,4 @@
 - [ag](https://github.com/ggreer/the_silver_searcher)
 - [fzf](https://github.com/junegunn/fzf)
 - [vim](https://github.com/vim/vim)
-
-## [modern-unix](https://github.com/ibraheemdev/modern-unix)
+- [modern-unix](https://github.com/ibraheemdev/modern-unix)
